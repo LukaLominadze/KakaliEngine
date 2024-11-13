@@ -15,10 +15,10 @@ namespace Game2D.glcore
             GL.BindTexture(TextureTarget.Texture2D, RendererID);
 
             ImageResult texture = ImageResult.FromStream(File.OpenRead(filePath), ColorComponents.RedGreenBlueAlpha);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8, texture.Width, texture.Height,
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba16, texture.Width, texture.Height,
                           0, PixelFormat.Rgba, PixelType.UnsignedByte, texture.Data);
 
-            GL.TextureStorage2D(RendererID, 1, SizedInternalFormat.Rgba8, texture.Width, texture.Height);
+            GL.TextureStorage2D(RendererID, 1, SizedInternalFormat.Rgba16, texture.Width, texture.Height);
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);

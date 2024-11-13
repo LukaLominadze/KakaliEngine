@@ -20,7 +20,7 @@ namespace Game2D.core
             WindowData = new WindowData(width, height, KeyboardState, MouseState, CursorState,
                 () => { return CursorState; },
                 (state) => CursorState = state);
-            AddLayer(new Camera2D(new Vector3(0, 0, 0)));
+            AddLayer(new Camera3D(new Vector3(0, 0, 0)));
         }
 
         public void AddLayer(Layer layer)

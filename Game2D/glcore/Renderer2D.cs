@@ -56,6 +56,7 @@ namespace Game2D.glcore
             Log.GLCall(() => GL.Uniform1(location, textureUnits.Length, textureUnits));
 
             Log.DebugLog("Initialized Renderer!");
+
         }
 
         public static void SetClearColor(Color4 color)
