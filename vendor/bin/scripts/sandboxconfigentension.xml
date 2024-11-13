@@ -1,0 +1,20 @@
+
+  <ItemGroup>
+    <ResFiles Include="..\Game2D\res\**\*.*" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="Build">
+    <!-- Ensure the destination directory exists -->
+    <MakeDir Directories="$(ProjectDir)res" />
+
+    <!-- Copy each file from ResFiles to the destination -->
+    <Copy 
+      SourceFiles="@(ResFiles)" 
+      DestinationFolder="$(ProjectDir)res\%(RecursiveDir)" 
+      SkipUnchangedFiles="true" />
+  </Target>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+

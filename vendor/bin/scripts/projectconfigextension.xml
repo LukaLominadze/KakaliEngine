@@ -1,0 +1,4 @@
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Distribution|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>

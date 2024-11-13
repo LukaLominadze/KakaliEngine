@@ -4,6 +4,7 @@
 
 **/bin/
 **/obj/
+!/vendor/bin/
 
 SandboxTK/res/
 SandboxTK/Program.cs
