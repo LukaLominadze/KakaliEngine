@@ -1,4 +1,8 @@
+**/.vs/
 **.sln
 **.csproj
 
-SandboxTK\Program.cs
+**/bin/
+**/obj/
+
+SandboxTK/Program.cs
