@@ -1,5 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using StbImageSharp;
+using Game2D.core;
 
 namespace Game2D.glcore
 {
@@ -11,37 +12,35 @@ namespace Game2D.glcore
         {
             StbImage.stbi_set_flip_vertically_on_load(1);
 
-            RendererID = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2D, RendererID);
+            RendererID = Log.GLCall(GL.GenTexture);
+            Log.GLCall(() => GL.BindTexture(TextureTarget.Texture2D, RendererID));
 
             ImageResult texture = ImageResult.FromStream(File.OpenRead(filePath), ColorComponents.RedGreenBlueAlpha);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba16, texture.Width, texture.Height,
-                          0, PixelFormat.Rgba, PixelType.UnsignedByte, texture.Data);
+            Log.GLCall(() => GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba16, texture.Width, texture.Height,
+                          0, PixelFormat.Rgba, PixelType.UnsignedByte, texture.Data));
 
-            GL.TextureStorage2D(RendererID, 1, SizedInternalFormat.Rgba16, texture.Width, texture.Height);
-
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            Log.GLCall(() => GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat));
+            Log.GLCall(() => GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat));
+            Log.GLCall(() => GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest));
+            Log.GLCall(() => GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest));
 
             Unbind();
         }
 
         public void Bind(int slot = 0)
         {
-            GL.ActiveTexture(TextureUnit.Texture0 + slot);
-            GL.BindTexture(TextureTarget.Texture2D, RendererID);
+            Log.GLCall(() => GL.ActiveTexture(TextureUnit.Texture0 + slot));
+            Log.GLCall(() => GL.BindTexture(TextureTarget.Texture2D, RendererID));
         }
 
         public void Unbind()
         {
-            GL.BindTexture(TextureTarget.Texture2D, 0);
+            Log.GLCall(() => GL.BindTexture(TextureTarget.Texture2D, 0));
         }
 
         public void Delete()
         {
-            GL.DeleteTexture(RendererID);
+            Log.GLCall(() => GL.DeleteTexture(RendererID));
         }
     }
 }

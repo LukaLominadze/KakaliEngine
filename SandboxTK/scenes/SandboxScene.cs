@@ -1,5 +1,6 @@
 ﻿using Game2D.game.components;
 using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
 
 namespace Game2D.game.scenes
 {

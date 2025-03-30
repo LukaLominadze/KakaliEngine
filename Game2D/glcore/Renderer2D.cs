@@ -52,7 +52,7 @@ namespace Game2D.glcore
             for (int i = 0; i < textureUnits.Length; i++)
                 textureUnits[i] = i; // Texture slots from 0 to 15
 
-            int location = s_data.DefaultShader.GetUniformLocation("u_Textures");
+            int location = Log.GLCall(() => s_data.DefaultShader.GetUniformLocation("u_Textures"));
             Log.GLCall(() => GL.Uniform1(location, textureUnits.Length, textureUnits));
 
             Log.DebugLog("Initialized Renderer!");
@@ -154,7 +154,7 @@ namespace Game2D.glcore
 
             for (int i = 0; i < s_data.TextureSlotIndex; i++)
             {
-                s_data.Textures[i].Bind(i);
+                 s_data.Textures[i].Bind(i);
             }
 
             Log.GLCall(() => GL.DrawElements(PrimitiveType.Triangles, s_data.CurrentIndex, DrawElementsType.UnsignedInt, 0));
