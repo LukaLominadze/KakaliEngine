@@ -136,7 +136,7 @@ namespace Game2D.core
         }
     }
 
-    public struct WindowData
+    public class WindowData
     {
         public float ScreenWidth { get; private set; }
         public float ScreenHeight { get; private set; }
