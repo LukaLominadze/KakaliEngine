@@ -7,20 +7,18 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace Game2D.glcore
 {
-    internal class Camera2D : Layer
+    public class Camera2D : Layer
     {
-        private float screenWidth;
-        private float screenHeight;
-        private float zoom = 1.0f;
-        private float aspect = 0.0f;
-        const float SPEED = 5f;
-        const float SCROLLSPEED = 350f;
+        protected float screenWidth;
+        protected float screenHeight;
+        protected float zoom = 1.0f;
+        protected float aspect = 0.0f;
 
         public Vector3 position;
 
-        Vector3 up = Vector3.UnitY;
-        Vector3 forward = -Vector3.UnitZ;
-        Vector3 right = Vector3.UnitX;
+        protected Vector3 up = Vector3.UnitY;
+        protected Vector3 forward = -Vector3.UnitZ;
+        protected Vector3 right = Vector3.UnitX;
 
         public Camera2D(Vector3 position)
         {
@@ -35,30 +33,6 @@ namespace Game2D.glcore
             screenWidth = args.Width;
             screenHeight = args.Height;
             aspect = screenHeight / screenWidth;
-        }
-
-        public override void OnUpdate(FrameEventArgs args)
-        {
-            if (Input.IsKeyDown(Keys.W))
-            {
-                position += up * SPEED * (float)args.Time;
-            }
-            if (Input.IsKeyDown(Keys.S))
-            {
-                position += -up * SPEED * (float)args.Time;
-            }
-            if (Input.IsKeyDown(Keys.A))
-            {
-                position += -right * SPEED * (float)args.Time;
-            }
-            if (Input.IsKeyDown(Keys.D))
-            {
-                position += right * SPEED * (float)args.Time;
-            }
-
-            //position += forward * Input.MouseScrollDelta.Y * SCROLLSPEED * (float)args.Time;
-            zoom -= Input.MouseScrollDelta.Y * SCROLLSPEED * (float)args.Time;
-            zoom = MathHelper.Clamp(zoom, 0.1f, 10.0f);
         }
 
         public override void OnRender(FrameEventArgs args)

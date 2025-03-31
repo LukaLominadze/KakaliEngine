@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Game2D.glcore
 {
-    internal class VertexArray
+    public class VertexArray
     {
         public int RendererID { get; private set; }
 

@@ -4,7 +4,7 @@ using Game2D.core;
 
 namespace Game2D.glcore
 {
-    internal class Texture
+    public class Texture
     {
         public int RendererID { get; private set; }
 

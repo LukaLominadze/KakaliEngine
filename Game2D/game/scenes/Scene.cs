@@ -38,6 +38,14 @@ namespace Game2D.game.scenes
             }
         }
 
+        public override void OnImGuiRender()
+        {
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.OnImGuiRender();
+            }
+        }
+
         public override void OnDetach()
         {
             foreach (GameObject gameObject in gameObjects)

@@ -2,7 +2,7 @@
 
 namespace Game2D.glcore
 {
-    internal class VertexBufferLayout
+    public class VertexBufferLayout
     {
         private uint stride = 0;
         private List<VertexBufferLayoutElements> elements = new List<VertexBufferLayoutElements>();
@@ -39,7 +39,7 @@ namespace Game2D.glcore
 
     }
 
-    internal struct VertexBufferLayoutElements
+    public struct VertexBufferLayoutElements
     {
         public VertexAttribPointerType Type;
         public uint Count;

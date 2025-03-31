@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Game2D.glcore
 {
-    internal class Shader
+    public class Shader
     {
         private int vertexShader;
         private int fragmentShader;

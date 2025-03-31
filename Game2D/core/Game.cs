@@ -5,22 +5,28 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using ImGuiNET;
+using Dear_ImGui_Sample;
 
 namespace Game2D.core
 {
     public class Game : GameWindow
     {
+        ImGuiController _controller;
+
         public static WindowData WindowData { get; private set; }
 
         private List<Layer> layers = new List<Layer>();
+        public bool Docking = false;
 
-        public Game(int width, int height, string title)
+        public Game(int width, int height, string title, bool docking)
             : base(GameWindowSettings.Default, new NativeWindowSettings() { ClientSize = (width, height), Title = title })
         {
             WindowData = new WindowData(width, height, KeyboardState, MouseState, CursorState,
                 () => { return CursorState; },
                 (state) => CursorState = state);
-            AddLayer(new Camera3D(new Vector3(0, 0, 0)));
+            AddLayer(new Camera2D(new Vector3(0, 0, 0)));
+            Docking = docking;  
         }
 
         public void AddLayer(Layer layer)
@@ -35,6 +41,8 @@ namespace Game2D.core
 
             Renderer2D.Initialize();
             Renderer2D.SetClearColor(new Color4(0.1f, 0.1f, 0.1f, 1.0f));
+
+            _controller = new ImGuiController(ClientSize.X, ClientSize.Y);
         }
 
         protected override void OnResize(ResizeEventArgs e)
@@ -46,6 +54,8 @@ namespace Game2D.core
             {
                 layer.OnResize(e);
             }
+
+            _controller.WindowResized(ClientSize.X, ClientSize.Y);
         }
 
         protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
@@ -58,6 +68,7 @@ namespace Game2D.core
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
+            WindowData.SetDeltaTime(args.Time);
 
             if (Input.IsKeyPressed(Keys.F11))
             {
@@ -83,7 +94,33 @@ namespace Game2D.core
             }
 
             Renderer2D.EndScene();
+
+            // UI
+            _controller.Start(this, (float)args.Time);
+            if (Docking) ImGui.DockSpaceOverViewport();
+
+            foreach (Layer layer in layers)
+            {
+                layer.OnImGuiRender();
+            }
+
+            _controller.End();
+
             Context.SwapBuffers();
+        }
+
+        protected override void OnTextInput(TextInputEventArgs e)
+        {
+            base.OnTextInput(e);
+
+            _controller.PressChar((char)e.Unicode);
+        }
+
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnMouseWheel(e);
+
+            _controller.MouseScroll(e.Offset);
         }
 
         protected override void OnUnload()
@@ -103,6 +140,7 @@ namespace Game2D.core
     {
         public float ScreenWidth { get; private set; }
         public float ScreenHeight { get; private set; }
+        public double DeltaTime { get; private set; }
         public KeyboardState KeyboardState { get; private set; }
         public MouseState MouseState { get; private set; }
 
@@ -123,6 +161,11 @@ namespace Game2D.core
         {
             ScreenWidth = width;
             ScreenHeight = height;
+        }
+
+        public void SetDeltaTime(double deltaTime)
+        {
+            DeltaTime = deltaTime;
         }
     }
 }

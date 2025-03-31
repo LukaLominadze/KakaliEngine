@@ -4,7 +4,7 @@ using OpenTK.Mathematics;
 
 namespace Game2D.glcore
 {
-    internal static class Renderer2D
+    public static class Renderer2D
     {
         private static Renderer2DData s_data = new Renderer2DData();
         public static Renderer2DData Data { get => s_data; }
@@ -203,7 +203,7 @@ namespace Game2D.glcore
         }
     }
 
-    internal class Renderer2DData
+    public class Renderer2DData
     {
         public const int MaxQuads = 10000;
         public const int MaxVertices = MaxQuads * QuadVertex.FullElementCount;
@@ -236,7 +236,7 @@ namespace Game2D.glcore
         }
     }
 
-    internal struct QuadVertex
+    public struct QuadVertex
     {
         public const int VertexCount = 4;
         public const int VertexElementCount = 10;

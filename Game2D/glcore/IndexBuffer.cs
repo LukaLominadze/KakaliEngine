@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Game2D.glcore
 {
-    internal class IndexBuffer
+    public class IndexBuffer
     {
         public int RendererID { get; private set; }
 

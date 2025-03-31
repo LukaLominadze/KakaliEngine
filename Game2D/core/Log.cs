@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Game2D.core
 {
-    internal static class Log
+    public static class Log
     {
         [Conditional("DEBUG")]
         [Conditional("RELEASE")]
